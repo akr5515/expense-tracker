@@ -9,13 +9,47 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React from "react";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import HomeIcon from "@mui/icons-material/Home";
+import BudgetsIcon from "@mui/icons-material/AttachMoney";
+import ExpensesIcon from "@mui/icons-material/MoneyOff";
+import AssetsIcon from "@mui/icons-material/Apartment";
+import DebtsIcon from "@mui/icons-material/AccountBalance";
+import SignOutIcon from "@mui/icons-material/MeetingRoom";
+import { HEADER_DATA } from "../constants/data";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 const CustomDrawer = () => {
+  const navigate = useNavigate();
+  const navMap = {
+    home: {
+      icon: <HomeIcon />,
+      path: "/",
+    },
+    expenses: {
+      icon: <ExpensesIcon />,
+      path: "expenses",
+    },
+    budgets: {
+      icon: <BudgetsIcon />,
+      path: "Budgets",
+    },
+    assets: {
+      icon: <AssetsIcon />,
+      path: "Assets",
+    },
+    debts: {
+      icon: <DebtsIcon />,
+      path: "Debts",
+    },
+  };
+
+  const handleNavClick = (key: string) => {
+    navigate(navMap[key].path);
+  };
+
   return (
     <Drawer
       sx={{
@@ -36,19 +70,18 @@ const CustomDrawer = () => {
       </Toolbar>
       <Divider />
       <List>
-        {["Home", "Expenses", "Budgets", "Assets", "Debts"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {" "}
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {HEADER_DATA.map((header, index) => (
+          <ListItem
+            key={header.key}
+            disablePadding
+            onClick={() => handleNavClick(header.key)}
+          >
+            <ListItemButton>
+              <ListItemIcon>{navMap[header.key].icon}</ListItemIcon>
+              <ListItemText primary={header.value} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
       <Divider />
       <List>
@@ -56,7 +89,7 @@ const CustomDrawer = () => {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <InboxIcon />
+                <SignOutIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
