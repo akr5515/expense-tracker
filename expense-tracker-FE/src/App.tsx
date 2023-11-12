@@ -20,6 +20,8 @@ import ExpensesPage from "./pages/expenses.page";
 import BudgetsPage from "./pages/budgets.page";
 import AssetsPage from "./pages/assets.page";
 import DebtsPage from "./pages/debts.page";
+import LoginPage from "./pages/login.page";
+import RegistrationPage from "./pages/registration.page";
 
 const drawerWidth = 240;
 
@@ -46,6 +48,8 @@ export default function App() {
         <Box>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/expenses" element={<ExpensesPage />} />
             <Route path="/budgets" element={<BudgetsPage />} />
             <Route path="/assets" element={<AssetsPage />} />
