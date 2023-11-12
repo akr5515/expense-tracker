@@ -1,6 +1,10 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container, Paper, TextField, Button, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { login } from "../store/reducers/userReducers";
+import { AppDispatch } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormInput {
   username: string;
@@ -8,6 +12,9 @@ interface LoginFormInput {
 }
 
 const LoginPage: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -15,7 +22,11 @@ const LoginPage: React.FC = () => {
   } = useForm<LoginFormInput>();
 
   const onSubmit: SubmitHandler<LoginFormInput> = (data) => {
-    console.log(data); // You can handle login logic here
+    console.log(data);
+
+    dispatch(login());
+    localStorage.setItem("token", "login");
+    navigate("/");
   };
 
   return (

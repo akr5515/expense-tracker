@@ -18,10 +18,14 @@ import DebtsIcon from "@mui/icons-material/AccountBalance";
 import SignOutIcon from "@mui/icons-material/MeetingRoom";
 import { HEADER_DATA } from "../constants/data";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../store/store";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/reducers/userReducers";
 
 const drawerWidth = 240;
 
 const CustomDrawer = () => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const navMap = {
     home: {
@@ -86,7 +90,14 @@ const CustomDrawer = () => {
       <Divider />
       <List>
         {["Sign Out"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem
+            key={text}
+            disablePadding
+            onClick={() => {
+              localStorage.removeItem("token");
+              dispatch(logout());
+            }}
+          >
             <ListItemButton>
               <ListItemIcon>
                 <SignOutIcon />

@@ -4,15 +4,7 @@ import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import CustomDrawer from "./components/drawer.component";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home.page";
@@ -23,15 +15,24 @@ import DebtsPage from "./pages/debts.page";
 import LoginPage from "./pages/login.page";
 import RegistrationPage from "./pages/registration.page";
 
+import { useAuthHook } from "./hooks/useAuthHook";
+import Authenticate from "./components/authenticate";
+import NotFoundPage from "./pages/notFoundPage.page";
+
 const drawerWidth = 240;
 
 export default function App() {
+  const { token } = useAuthHook();
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{
+          width: token && `calc(100% - ${drawerWidth}px)`,
+          ml: `${drawerWidth}px`,
+        }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
@@ -39,7 +40,8 @@ export default function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <CustomDrawer />
+
+      {token && <CustomDrawer />}
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
@@ -47,13 +49,16 @@ export default function App() {
         <Toolbar />
         <Box>
           <Routes>
-            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />
-            <Route path="/expenses" element={<ExpensesPage />} />
-            <Route path="/budgets" element={<BudgetsPage />} />
-            <Route path="/assets" element={<AssetsPage />} />
-            <Route path="/debts" element={<DebtsPage />} />
+            <Route element={<Authenticate />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/expenses" element={<ExpensesPage />} />
+              <Route path="/budgets" element={<BudgetsPage />} />
+              <Route path="/assets" element={<AssetsPage />} />
+              <Route path="/debts" element={<DebtsPage />} />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>
       </Box>
