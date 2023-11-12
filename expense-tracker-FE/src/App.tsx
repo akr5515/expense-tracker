@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import CustomDrawer from "./components/drawer.component";
+import CustomDrawer from "./components/drawer";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home.page";
 import ExpensesPage from "./pages/expenses.page";
