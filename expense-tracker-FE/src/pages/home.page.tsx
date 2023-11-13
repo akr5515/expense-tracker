@@ -10,6 +10,7 @@ import React from "react";
 import CustomCard from "../components/card";
 import FinancialHealthScoreCalculator from "../components/financeCalculator";
 import TransactionHistory from "../components/transactionHistory";
+import FinancialOverview from "../components/financialOverview";
 
 const HomePage = () => {
   const cardData = [
@@ -40,7 +41,15 @@ const HomePage = () => {
         </Grid>
         <Box>
           <Typography variant="h5">Transaction History </Typography>
-          <TransactionHistory />
+          <Box sx={{ display: "flex" }}>
+            <Box sx={{ width: "50%" }}>
+              <TransactionHistory />
+            </Box>
+
+            <Box sx={{ width: "450px" }}>
+              <FinancialOverview />
+            </Box>
+          </Box>
         </Box>
       </Box>
     </div>

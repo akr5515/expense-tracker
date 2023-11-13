@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container, Paper, TextField, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface RegistrationFormInput {
   firstName: string;
@@ -89,6 +90,9 @@ const RegistrationPage: React.FC = () => {
           >
             Register
           </Button>
+          <Typography sx={{ marginTop: "10px" }}>
+            Already have an account? <Link to="/login">Login</Link>
+          </Typography>
         </form>
       </Paper>
     </Container>

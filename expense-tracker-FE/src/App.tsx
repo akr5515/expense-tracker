@@ -50,8 +50,9 @@ export default function App() {
         <Box>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/registration" element={<RegistrationPage />} />
+            <Route path="/register" element={<RegistrationPage />} />
             <Route element={<Authenticate />}>
+              {/* <CustomDrawer /> */}
               <Route path="/" element={<HomePage />} />
               <Route path="/expenses" element={<ExpensesPage />} />
               <Route path="/budgets" element={<BudgetsPage />} />

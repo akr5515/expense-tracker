@@ -96,6 +96,7 @@ const CustomDrawer = () => {
             onClick={() => {
               localStorage.removeItem("token");
               dispatch(logout());
+              navigate("/login");
             }}
           >
             <ListItemButton>

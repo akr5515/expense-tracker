@@ -4,7 +4,7 @@ import { Container, Paper, TextField, Button, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/userReducers";
 import { AppDispatch } from "../store/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface LoginFormInput {
   username: string;
@@ -74,6 +74,9 @@ const LoginPage: React.FC = () => {
           >
             Log In
           </Button>
+          <Typography sx={{ marginTop: "10px" }}>
+            Don't have an account? <Link to="/register">Register here</Link>
+          </Typography>
         </form>
       </Paper>
     </Container>
