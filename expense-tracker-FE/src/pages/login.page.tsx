@@ -6,6 +6,7 @@ import { login } from "../store/reducers/userReducers";
 import { AppDispatch } from "../store/store";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/callApiUtil";
+import { setNotification } from "../store/reducers/notificationReducer";
 
 interface LoginFormInput {
   username: string;
@@ -33,10 +34,19 @@ const LoginPage: React.FC = () => {
       .then((res) => {
         console.log(res.data);
         dispatch(login(res.data));
+        dispatch(setNotification({ message: "Logged In", isOpen: true }));
+
+        localStorage.setItem("token", res.data.accessToken);
+        navigate("/");
+      })
+      .catch((err) => {
+        dispatch(
+          setNotification({
+            message: "Provide valid credentials",
+            isOpen: true,
+          })
+        );
       });
-    // dispatch(login());
-    // localStorage.setItem("token", "login");
-    // navigate("/");
   };
 
   return (

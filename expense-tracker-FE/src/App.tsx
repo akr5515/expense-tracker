@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,12 +18,23 @@ import RegistrationPage from "./pages/registration.page";
 import { useAuthHook } from "./hooks/useAuthHook";
 import Authenticate from "./components/authenticate";
 import NotFoundPage from "./pages/notFoundPage.page";
+import CommonSnackbar from "./components/snackbar";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import { setNotification } from "./store/reducers/notificationReducer";
 
 const drawerWidth = 240;
 
 export default function App() {
-  // console.log(import.meta.env.VITE_SERVER_URL);
   const { token } = useAuthHook();
+  const dispatch = useDispatch();
+  const notificationState = useSelector(
+    (state: RootState) => state.notification
+  );
+
+  const handleSnackbarClose = () => {
+    dispatch(setNotification({ message: "", isOpen: false }));
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -36,9 +47,7 @@ export default function App() {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
+          <Typography variant="h6" noWrap component="div"></Typography>
         </Toolbar>
       </AppBar>
 
@@ -64,6 +73,13 @@ export default function App() {
           </Routes>
         </Box>
       </Box>
+      {/* <button onClick={handleSnackbarOpen}>Show Snackbar</button> */}
+
+      <CommonSnackbar
+        message={notificationState.message}
+        isOpen={notificationState.isOpen}
+        onClose={handleSnackbarClose}
+      />
     </Box>
   );
 }
