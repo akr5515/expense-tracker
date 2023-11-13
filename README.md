@@ -1,5 +1,5 @@
 # expense-tracker
-Expense tracker developed with react, mui, typescript, nestJS, prisma, postgresql, docker etc.
+Expense tracker developed with react, mui,chartjs, typescript, nestJS, prisma, postgresql, docker etc.
 
 ## Demo Screenshot
 
@@ -60,7 +60,7 @@ After migration has been completed, you can check the database using prisma stud
 npx prisma studio
 ```
 
-### Server Setup
+### Finishing Server Setup
 Now run the following command to run your backend system:
 ```
 yarn start:dev
