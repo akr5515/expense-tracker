@@ -1,6 +1,8 @@
 # expense-tracker
 Expense tracker developed with react, mui,chartjs, typescript, nestJS, prisma, postgresql, docker etc.
 
+## Deployment
+Coming Soon!
 ## Demo Screenshot
 
 ![Homepage](expense-tracker-FE/src/assets/demo.png)
