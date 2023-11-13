@@ -1,22 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface UserState {
-  access_token: string;
+  accessToken: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 
 const initialState: UserState = {
-  access_token: "",
+  accessToken: "",
+  userId: "",
+  firstName: "",
+  lastName: "",
+  email: "",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state) => {
-      state.access_token = "login";
+    login: (state, action) => {
+      Object.assign(state, action.payload);
     },
     logout: (state) => {
-      state.access_token = "";
+      const emptyObject = {
+        accessToken: "",
+        userId: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+      };
+      Object.assign(state, emptyObject);
     },
   },
 });

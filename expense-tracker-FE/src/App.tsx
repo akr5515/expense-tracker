@@ -22,6 +22,7 @@ import NotFoundPage from "./pages/notFoundPage.page";
 const drawerWidth = 240;
 
 export default function App() {
+  // console.log(import.meta.env.VITE_SERVER_URL);
   const { token } = useAuthHook();
 
   return (

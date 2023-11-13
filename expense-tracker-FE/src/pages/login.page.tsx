@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/userReducers";
 import { AppDispatch } from "../store/store";
 import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/callApiUtil";
 
 interface LoginFormInput {
   username: string;
@@ -24,9 +25,18 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<LoginFormInput> = (data) => {
     console.log(data);
 
-    dispatch(login());
-    localStorage.setItem("token", "login");
-    navigate("/");
+    axiosInstance
+      .post("/auth/login", {
+        email: data.username,
+        password: data.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(login(res.data));
+      });
+    // dispatch(login());
+    // localStorage.setItem("token", "login");
+    // navigate("/");
   };
 
   return (
