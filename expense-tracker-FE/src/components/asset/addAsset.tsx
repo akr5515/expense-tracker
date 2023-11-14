@@ -2,10 +2,11 @@ import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { TextField, Button, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useAssetHook } from "../../hooks/useAssetHook";
 
 interface AssetFormData {
   label: string;
-  amount: number;
+  amount: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -21,11 +22,18 @@ const useStyles = makeStyles(() => ({
 
 const AddAsset: React.FC = () => {
   const classes = useStyles();
-  const { control, handleSubmit } = useForm<AssetFormData>();
+  const { handleAddAsset } = useAssetHook();
+  const { control, handleSubmit } = useForm<AssetFormData>({
+    defaultValues: {
+      label: "",
+      amount: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<AssetFormData> = (data) => {
     console.log(data);
     // Add your logic to handle the form submission
+    handleAddAsset(data);
   };
 
   return (
@@ -44,7 +52,6 @@ const AddAsset: React.FC = () => {
         <Controller
           name="label"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <TextField label="Label" variant="outlined" {...field} />
           )}
@@ -53,7 +60,6 @@ const AddAsset: React.FC = () => {
         <Controller
           name="amount"
           control={control}
-          defaultValue={0}
           render={({ field }) => (
             <TextField
               type="number"
@@ -68,7 +74,7 @@ const AddAsset: React.FC = () => {
           type="submit"
           variant="contained"
           color="primary"
-          sx={{ width: "30%" }}
+          sx={{ width: "130px", fontSize: "12px" }}
         >
           Add Asset
         </Button>

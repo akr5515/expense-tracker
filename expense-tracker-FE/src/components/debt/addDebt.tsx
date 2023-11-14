@@ -2,10 +2,11 @@ import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { TextField, Button, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useDebtHook } from "../../hooks/useDebtHook";
 
 interface DebtFormData {
   label: string;
-  amount: number;
+  amount: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -21,11 +22,16 @@ const useStyles = makeStyles(() => ({
 
 const AddDebt: React.FC = () => {
   const classes = useStyles();
-  const { control, handleSubmit } = useForm<DebtFormData>();
+  const { handleAddDebt } = useDebtHook();
+  const { control, handleSubmit } = useForm<DebtFormData>({
+    defaultValues: {
+      label: "",
+      amount: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<DebtFormData> = (data) => {
-    console.log(data);
-    // Add your logic to handle the form submission
+    handleAddDebt(data);
   };
 
   return (
@@ -44,7 +50,6 @@ const AddDebt: React.FC = () => {
         <Controller
           name="label"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <TextField label="Label" variant="outlined" {...field} />
           )}
@@ -53,7 +58,6 @@ const AddDebt: React.FC = () => {
         <Controller
           name="amount"
           control={control}
-          defaultValue={0}
           render={({ field }) => (
             <TextField
               type="number"
@@ -68,7 +72,7 @@ const AddDebt: React.FC = () => {
           type="submit"
           variant="contained"
           color="primary"
-          sx={{ width: "30%" }}
+          sx={{ width: "130px", fontSize: "12px" }}
         >
           Add Debt
         </Button>

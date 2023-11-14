@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import AddAsset from "../components/asset/addAsset";
+import AddDebt from "../components/debt/addDebt";
 
 const DebtsPage = () => {
   return (
     <Box>
       <Box sx={{ marginBottom: "10px" }}>
         <Typography variant="h4">Add Debt: </Typography>
-        <AddAsset />
+        <AddDebt />
       </Box>
 
       <Box>

@@ -8,7 +8,7 @@ const Authenticate = () => {
 
   return token ? (
     <>
-      <CustomDrawer />
+      {/* <CustomDrawer /> */}
       <Box
         component="main"
         // sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}

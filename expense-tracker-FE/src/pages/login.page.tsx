@@ -32,11 +32,11 @@ const LoginPage: React.FC = () => {
         password: data.password,
       })
       .then((res) => {
-        console.log(res.data);
         dispatch(login(res.data));
         dispatch(setNotification({ message: "Logged In", isOpen: true }));
 
         localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("userId", res.data.userId);
         navigate("/");
       })
       .catch((err) => {

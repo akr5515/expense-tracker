@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -6,7 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CustomDrawer from "./components/drawer";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "./pages/home.page";
 import ExpensesPage from "./pages/expenses.page";
 import BudgetsPage from "./pages/budgets.page";
@@ -27,6 +27,8 @@ const drawerWidth = 240;
 
 export default function App() {
   const { token } = useAuthHook();
+  const [open, setOpen] = useState<boolean>(false);
+  const location = useLocation();
   const dispatch = useDispatch();
   const notificationState = useSelector(
     (state: RootState) => state.notification
@@ -35,6 +37,16 @@ export default function App() {
   const handleSnackbarClose = () => {
     dispatch(setNotification({ message: "", isOpen: false }));
   };
+
+  useEffect(() => {
+    if (token) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+
+    // console.log("The key ", token);
+  }, [location.key, token]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -51,7 +63,7 @@ export default function App() {
         </Toolbar>
       </AppBar>
 
-      {token && <CustomDrawer />}
+      {open && <CustomDrawer />}
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}

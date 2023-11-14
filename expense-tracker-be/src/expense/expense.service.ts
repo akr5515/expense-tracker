@@ -12,15 +12,6 @@ export class ExpenseService {
     return;
   }
 
-  async getBudgetByUserId(userId: string): Promise<Expense[]> {
-    const budget = await this.prismaService.budget.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-    return budget;
-  }
-
   async addExpense(payload: ExpenseInputDto): Promise<void> {
     const expense = await this.prismaService.expense.create({ data: payload });
     return;
@@ -34,5 +25,41 @@ export class ExpenseService {
   async addDebt(payload: ExpenseInputDto): Promise<void> {
     const debt = await this.prismaService.debt.create({ data: payload });
     return;
+  }
+
+  async getBudgetByUserId(userId: string): Promise<Expense[]> {
+    const budget = await this.prismaService.budget.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return budget;
+  }
+
+  async getExpenseByUserId(userId: string): Promise<Expense[]> {
+    const expense = await this.prismaService.expense.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return expense;
+  }
+
+  async getAssetByUserId(userId: string): Promise<Expense[]> {
+    const asset = await this.prismaService.asset.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return asset;
+  }
+
+  async getDebtByUserId(userId: string): Promise<Expense[]> {
+    const debt = await this.prismaService.debt.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return debt;
   }
 }

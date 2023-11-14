@@ -1,10 +1,11 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import CountUp from "react-countup";
 
 interface CardProps {
   title: string;
-  amount: string;
+  amount: number;
 }
 
 const useStyles = makeStyles({
@@ -36,7 +37,7 @@ const CustomCard: React.FC<CardProps> = ({ title, amount }) => {
           {title}
         </Typography>
         <Typography variant="h5" component="div" className={classes.amount}>
-          {amount}
+          $<CountUp end={amount} duration={2} />
         </Typography>
       </CardContent>
     </Card>

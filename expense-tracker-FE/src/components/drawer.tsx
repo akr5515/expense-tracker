@@ -9,7 +9,6 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from "@mui/icons-material/Home";
 import BudgetsIcon from "@mui/icons-material/AttachMoney";
 import ExpensesIcon from "@mui/icons-material/MoneyOff";
@@ -18,14 +17,12 @@ import DebtsIcon from "@mui/icons-material/AccountBalance";
 import SignOutIcon from "@mui/icons-material/MeetingRoom";
 import { HEADER_DATA } from "../constants/data";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../store/store";
-import { useDispatch } from "react-redux";
-import { logout } from "../store/reducers/userReducers";
+import { useAuthHook } from "../hooks/useAuthHook";
 
 const drawerWidth = 240;
 
 const CustomDrawer = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const { handleLogout } = useAuthHook();
   const navigate = useNavigate();
   const navMap = {
     home: {
@@ -94,9 +91,7 @@ const CustomDrawer = () => {
             key={text}
             disablePadding
             onClick={() => {
-              localStorage.removeItem("token");
-              dispatch(logout());
-              navigate("/login");
+              handleLogout();
             }}
           >
             <ListItemButton>

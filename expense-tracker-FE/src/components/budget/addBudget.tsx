@@ -2,10 +2,11 @@ import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { TextField, Button, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useBudgetHook } from "../../hooks/useBudgetHook";
 
 interface BudgetFormData {
   label: string;
-  amount: number;
+  amount: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -21,10 +22,16 @@ const useStyles = makeStyles(() => ({
 
 const AddBudget: React.FC = () => {
   const classes = useStyles();
-  const { control, handleSubmit } = useForm<BudgetFormData>();
-
+  const { handleAddBudget } = useBudgetHook();
+  const { control, handleSubmit } = useForm<BudgetFormData>({
+    defaultValues: {
+      label: "",
+      amount: "",
+    },
+  });
   const onSubmit: SubmitHandler<BudgetFormData> = (data) => {
     console.log(data);
+    handleAddBudget(data);
     // Add your logic to handle the form submission
   };
 
@@ -44,7 +51,6 @@ const AddBudget: React.FC = () => {
         <Controller
           name="label"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <TextField label="Label" variant="outlined" {...field} />
           )}
@@ -53,7 +59,6 @@ const AddBudget: React.FC = () => {
         <Controller
           name="amount"
           control={control}
-          defaultValue={0}
           render={({ field }) => (
             <TextField
               type="number"
@@ -68,7 +73,7 @@ const AddBudget: React.FC = () => {
           type="submit"
           variant="contained"
           color="primary"
-          sx={{ width: "30%" }}
+          sx={{ width: "130px", fontSize: "12px" }}
         >
           Add Budget
         </Button>

@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinancialOverview: React.FC = () => {
+const FinancialOverviewPieChart: React.FC = ({ chartData }) => {
   const classes = useStyles();
 
   // Dummy data for the pie chart
@@ -21,7 +21,7 @@ const FinancialOverview: React.FC = () => {
     labels: ["Expenses", "Budget", "Assets", "Debts"],
     datasets: [
       {
-        data: [300, 500, 200, 100],
+        data: chartData,
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
       },
@@ -45,4 +45,4 @@ const FinancialOverview: React.FC = () => {
   );
 };
 
-export default FinancialOverview;
+export default FinancialOverviewPieChart;

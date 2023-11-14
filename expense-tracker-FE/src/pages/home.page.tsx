@@ -1,23 +1,24 @@
-import {
-  Box,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import CustomCard from "../components/card";
-import FinancialHealthScoreCalculator from "../components/financeCalculator";
 import TransactionHistory from "../components/transactionHistory";
-import FinancialOverview from "../components/financialOverview";
+import useHomePageHook from "../hooks/useHomePageHook";
+import FinancialOverviewPieChart from "../components/financialOverview";
 
 const HomePage = () => {
+  const { totalAmountData } = useHomePageHook();
   const cardData = [
-    { title: "Total Budgets", amount: "$1,000,000" },
-    { title: "Expenses", amount: "$500,000" },
-    { title: "Assets", amount: "$500,000" },
-    { title: "Debts", amount: "$1,000,000" },
+    { title: "Total Budgets", amount: totalAmountData?.budgets },
+    { title: "Expenses", amount: totalAmountData?.expenses },
+    { title: "Assets", amount: totalAmountData?.assets },
+    { title: "Debts", amount: totalAmountData?.debts },
+  ];
+
+  const chartData = [
+    totalAmountData?.expenses !== undefined ? totalAmountData?.expenses : 500,
+    totalAmountData?.budgets !== undefined ? totalAmountData?.budgets : 300,
+    totalAmountData?.assets !== undefined ? totalAmountData?.assets : 200,
+    totalAmountData?.debts !== undefined ? totalAmountData?.debts : 100,
   ];
   const expenseData: ExpenseItem[] = [
     { title: "Groceries", expense: "$100" },
@@ -35,7 +36,10 @@ const HomePage = () => {
         <Grid container spacing={3}>
           {cardData.map((data, index) => (
             <Grid key={index} item xs={12} sm={6}>
-              <CustomCard title={data.title} amount={data.amount} />
+              <CustomCard
+                title={data.title}
+                amount={data.amount ? data.amount : 0}
+              />
             </Grid>
           ))}
         </Grid>
@@ -47,7 +51,7 @@ const HomePage = () => {
             </Box>
 
             <Box sx={{ width: "450px" }}>
-              <FinancialOverview />
+              <FinancialOverviewPieChart chartData={chartData} />
             </Box>
           </Box>
         </Box>
