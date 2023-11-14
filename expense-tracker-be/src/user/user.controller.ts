@@ -36,4 +36,11 @@ export class UserController {
   async getTotalAmount(@Param('id') userId: string): Promise<UserTotalAmount> {
     return this.userService.geTotalAmountByUserId(userId);
   }
+
+  @UseGuards(JwtGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get('/transaction-list/:id')
+  async geTransactionListByUserId(@Param('id') userId: string): Promise<void> {
+    return this.userService.geTransactionListByUserId(userId);
+  }
 }

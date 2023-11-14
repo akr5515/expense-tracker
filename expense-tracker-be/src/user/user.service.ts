@@ -66,4 +66,29 @@ export class UserService {
 
     return totalAmount;
   }
+
+  async geTransactionListByUserId(userId: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        budgets: true,
+        assets: true,
+        expenses: true,
+        debts: true,
+      },
+    });
+
+    delete user.password;
+
+    const list = [
+      ...user.budgets.map((obj) => ({ ...obj, type: 'budget' })),
+      ...user.expenses.map((obj) => ({ ...obj, type: 'expense' })),
+      ...user.assets.map((obj) => ({ ...obj, type: 'asset' })),
+      ...user.debts.map((obj) => ({ ...obj, type: 'debt' })),
+    ];
+
+    console.log('The list ', list);
+
+    return;
+  }
 }
