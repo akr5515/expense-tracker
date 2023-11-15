@@ -13,13 +13,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserInfoFull } from './entities/userInfoFull.entity';
 import { JwtGuard } from 'src/auth/guard';
 import { UserTotalAmount } from './entities/user.entity';
+import { UserTransaction } from './entities/userTransaction.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @HttpCode(HttpStatus.CREATED)
-  @Post()
+  @Post('register')
   async create(@Body() createUserDto: CreateUserDto): Promise<void> {
     return this.userService.create(createUserDto);
   }
@@ -40,7 +41,9 @@ export class UserController {
   @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
   @Get('/transaction-list/:id')
-  async geTransactionListByUserId(@Param('id') userId: string): Promise<void> {
+  async geTransactionListByUserId(
+    @Param('id') userId: string,
+  ): Promise<UserTransaction[]> {
     return this.userService.geTransactionListByUserId(userId);
   }
 }

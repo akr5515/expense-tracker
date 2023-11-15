@@ -6,7 +6,7 @@ import useHomePageHook from "../hooks/useHomePageHook";
 import FinancialOverviewPieChart from "../components/financialOverview";
 
 const HomePage = () => {
-  const { totalAmountData } = useHomePageHook();
+  const { totalAmountData, transactionListData } = useHomePageHook();
   const cardData = [
     { title: "Total Budgets", amount: totalAmountData?.budgets },
     { title: "Expenses", amount: totalAmountData?.expenses },
@@ -19,12 +19,6 @@ const HomePage = () => {
     totalAmountData?.budgets !== undefined ? totalAmountData?.budgets : 300,
     totalAmountData?.assets !== undefined ? totalAmountData?.assets : 200,
     totalAmountData?.debts !== undefined ? totalAmountData?.debts : 100,
-  ];
-  const expenseData: ExpenseItem[] = [
-    { title: "Groceries", expense: "$100" },
-    { title: "Rent", expense: "$1,000" },
-    { title: "Utilities", expense: "$150" },
-    { title: "Entertainment", expense: "$50" },
   ];
   return (
     <div>
@@ -47,7 +41,7 @@ const HomePage = () => {
           <Typography variant="h5">Transaction History </Typography>
           <Box sx={{ display: "flex" }}>
             <Box sx={{ width: "50%" }}>
-              <TransactionHistory />
+              <TransactionHistory transactionListData={transactionListData} />
             </Box>
 
             <Box sx={{ width: "450px" }}>

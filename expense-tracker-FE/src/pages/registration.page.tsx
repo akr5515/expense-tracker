@@ -2,6 +2,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container, Paper, TextField, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import useUserHook from "../hooks/useUserHook";
 
 interface RegistrationFormInput {
   firstName: string;
@@ -11,14 +12,22 @@ interface RegistrationFormInput {
 }
 
 const RegistrationPage: React.FC = () => {
+  const { handleRegister } = useUserHook();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegistrationFormInput>();
+  } = useForm<RegistrationFormInput>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<RegistrationFormInput> = (data) => {
-    console.log(data); // You can handle registration logic here
+    handleRegister(data);
   };
 
   return (
@@ -73,7 +82,13 @@ const RegistrationPage: React.FC = () => {
             helperText={errors.email?.message}
           />
           <TextField
-            {...register("password", { required: "Password is required" })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must have length at least 8",
+              },
+            })}
             label="Password"
             variant="outlined"
             margin="normal"

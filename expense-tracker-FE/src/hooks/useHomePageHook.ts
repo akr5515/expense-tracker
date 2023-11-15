@@ -1,7 +1,6 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/callApiUtil";
+import { useAuthHook } from "./useAuthHook";
 
 interface TotalAmountResponse {
   budgets: number;
@@ -9,19 +8,42 @@ interface TotalAmountResponse {
   assets: number;
   debts: number;
 }
+export interface UserTransaction {
+  id: string;
+  label: string;
+  amount: string;
+  userId: string;
+  type: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const useHomePageHook = () => {
   const [totalAmountData, setTotalAmountData] = useState<TotalAmountResponse>();
+  const [transactionListData, setTransactionListData] = useState<
+    UserTransaction[]
+  >([]);
 
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const { userId } = useAuthHook();
 
-  useEffect(() => {
+  const getTotalAmount = () => {
     axiosInstance.get(`user/get-total/${userId}`).then((res) => {
       setTotalAmountData(res.data);
     });
+  };
+
+  const getTransactionList = () => {
+    axiosInstance.get(`user/transaction-list/${userId}`).then((res) => {
+      setTransactionListData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getTotalAmount();
+    getTransactionList();
   }, []);
 
-  return { totalAmountData };
+  return { totalAmountData, transactionListData };
 };
 
 export default useHomePageHook;

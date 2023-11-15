@@ -1,12 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container, Paper, TextField, Button, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { login } from "../store/reducers/userReducers";
-import { AppDispatch } from "../store/store";
-import { Link, useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/callApiUtil";
-import { setNotification } from "../store/reducers/notificationReducer";
+import { Link } from "react-router-dom";
+import useUserHook from "../hooks/useUserHook";
 
 interface LoginFormInput {
   username: string;
@@ -14,9 +10,7 @@ interface LoginFormInput {
 }
 
 const LoginPage: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const { handleLogin } = useUserHook();
   const {
     handleSubmit,
     register,
@@ -26,27 +20,7 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<LoginFormInput> = (data) => {
     console.log(data);
 
-    axiosInstance
-      .post("/auth/login", {
-        email: data.username,
-        password: data.password,
-      })
-      .then((res) => {
-        dispatch(login(res.data));
-        dispatch(setNotification({ message: "Logged In", isOpen: true }));
-
-        localStorage.setItem("token", res.data.accessToken);
-        localStorage.setItem("userId", res.data.userId);
-        navigate("/");
-      })
-      .catch((err) => {
-        dispatch(
-          setNotification({
-            message: "Provide valid credentials",
-            isOpen: true,
-          })
-        );
-      });
+    handleLogin(data);
   };
 
   return (
@@ -77,7 +51,13 @@ const LoginPage: React.FC = () => {
             helperText={errors.username?.message}
           />
           <TextField
-            {...register("password", { required: "Password is required" })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must have length at least 8",
+              },
+            })}
             label="Password"
             variant="outlined"
             margin="normal"

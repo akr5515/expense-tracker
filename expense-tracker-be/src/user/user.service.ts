@@ -6,6 +6,7 @@ import { hashConfig } from 'src/config/hash.config';
 import { UserInfoFull } from './entities/userInfoFull.entity';
 import { calculateSum } from 'src/utils/helpers';
 import { UserTotalAmount } from './entities/user.entity';
+import { UserTransaction } from './entities/userTransaction.entity';
 
 @Injectable()
 export class UserService {
@@ -67,7 +68,7 @@ export class UserService {
     return totalAmount;
   }
 
-  async geTransactionListByUserId(userId: string): Promise<void> {
+  async geTransactionListByUserId(userId: string): Promise<UserTransaction[]> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       include: {
@@ -87,8 +88,10 @@ export class UserService {
       ...user.debts.map((obj) => ({ ...obj, type: 'debt' })),
     ];
 
+    list.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
     console.log('The list ', list);
 
-    return;
+    return list;
   }
 }

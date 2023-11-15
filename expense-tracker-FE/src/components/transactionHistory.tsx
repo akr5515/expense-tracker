@@ -1,6 +1,7 @@
 import React from "react";
-import { List, ListItem, ListItemText, Paper } from "@mui/material";
+import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { UserTransaction } from "../hooks/useHomePageHook";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -8,6 +9,7 @@ const useStyles = makeStyles(() => ({
     maxWidth: 360,
     overflowY: "auto",
     maxHeight: "400px",
+    minHeight: "250px",
   },
 }));
 
@@ -16,31 +18,29 @@ interface TransactionItem {
   expense: string;
 }
 
-const TransactionHistory: React.FC = () => {
+const TransactionHistory: React.FC = ({ transactionListData }) => {
   const classes = useStyles();
 
-  const expenseData: TransactionItem[] = [
-    { title: "Groceries", expense: "$100" },
-    { title: "Rent", expense: "$1,000" },
-    { title: "Utilities", expense: "$150" },
-    { title: "Entertainment", expense: "$50" },
-    { title: "Groceries", expense: "$100" },
-    { title: "Rent", expense: "$1,000" },
-    { title: "Utilities", expense: "$150" },
-    { title: "Entertainment", expense: "$50" },
-  ];
+  const transactionType: { [key: string]: string } = {
+    budget: "Budget",
+    expense: "Expense",
+    asset: "Asset",
+    debt: "Debt",
+  };
 
   return (
     <Paper elevation={3} className={classes.root}>
       <List>
-        {expenseData.map((item, index) => (
-          <ListItem key={index}>
-            <ListItemText
-              primary={item.title}
-              secondary={`Expense: ${item.expense}`}
-            />
-          </ListItem>
-        ))}
+        {transactionListData.length === 0 && <Typography>No Data</Typography>}
+        {transactionListData.length !== 0 &&
+          transactionListData.map((item: UserTransaction) => (
+            <ListItem key={item.id}>
+              <ListItemText
+                primary={item.label}
+                secondary={`${transactionType[item.type]}: ${item.amount}`}
+              />
+            </ListItem>
+          ))}
       </List>
     </Paper>
   );

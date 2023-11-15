@@ -22,8 +22,8 @@ const FinancialOverviewPieChart: React.FC = ({ chartData }) => {
     datasets: [
       {
         data: chartData,
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
+        backgroundColor: ["#FF6384", "#36A2EB", "#4CAF50", "#FFCE56"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#4CAF50", "#FFCE56"],
       },
     ],
   };
