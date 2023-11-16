@@ -2,5 +2,5 @@ import { JwtSignOptions } from '@nestjs/jwt';
 
 export const accessJwtConfig: JwtSignOptions = {
   secret: process.env.ACCESS_JWT_SECRET,
-  expiresIn: '30m',
+  expiresIn: '2h',
 };

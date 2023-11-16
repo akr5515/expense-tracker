@@ -94,4 +94,23 @@ export class UserService {
 
     return list;
   }
+
+  async geBudgetListByUserId(userId: string): Promise<UserTransaction[]> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        budgets: true,
+      },
+    });
+
+    delete user.password;
+
+    const list = [...user.budgets.map((obj) => ({ ...obj, type: 'budget' }))];
+
+    list.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    console.log('The list ', list);
+
+    return list;
+  }
 }

@@ -46,4 +46,13 @@ export class UserController {
   ): Promise<UserTransaction[]> {
     return this.userService.geTransactionListByUserId(userId);
   }
+
+  @UseGuards(JwtGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get('/budget-list/:id')
+  async geBudgetListByUserId(
+    @Param('id') userId: string,
+  ): Promise<UserTransaction[]> {
+    return this.userService.geTransactionListByUserId(userId);
+  }
 }

@@ -28,13 +28,6 @@ const FinancialOverviewPieChart: React.FC = ({ chartData }) => {
     ],
   };
 
-  // const options = {
-  //   maintainAspectRatio: false, // Set to false to allow fixed size
-  //   responsive: false, // Set to false to disable responsiveness
-  //   width: 600, // Set the width of the chart
-  //   height: 600, // Set the height of the chart
-  // };
-
   return (
     <Container className={classes.container}>
       <Paper className={classes.paper}>

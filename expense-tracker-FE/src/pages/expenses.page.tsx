@@ -13,7 +13,7 @@ const ExpensesPage = () => {
 
       <Box>
         <Typography variant="h4">Monthly Expense: </Typography>
-        <BarChart />
+        {/* <BarChart /> */}
       </Box>
       <Box>
         <Typography variant="h4">Yearly Expense: </Typography>

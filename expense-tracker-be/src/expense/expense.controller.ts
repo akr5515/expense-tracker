@@ -28,6 +28,14 @@ export class ExpenseController {
   async getBudgetByUserId(@Param('id') userId: string): Promise<Expense[]> {
     return this.expenseService.getBudgetByUserId(userId);
   }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('budget-monthly/:id')
+  async getMonthlyBudgetByUserId(
+    @Param('id') userId: string,
+  ): Promise<{ dayList: number[]; sumList: number[] }> {
+    return this.expenseService.getMonthlyBudgetByUserId(userId);
+  }
   // expense
   @HttpCode(HttpStatus.CREATED)
   @Post()
